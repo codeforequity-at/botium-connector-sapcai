@@ -113,7 +113,7 @@ To acquire it
 - choose your chatbot, 
 - go in the settings in the tokens section.
  
- sing request token is preferred. 
+Using request token is preferred. 
 
 You can read about tokens [here](https://cai.tools.sap/docs/api-reference/?shell#authentication).
 
