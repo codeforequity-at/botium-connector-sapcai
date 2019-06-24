@@ -1,0 +1,47 @@
+{
+  "name": "botium-connector-sapcai",
+  "version": "0.0.1",
+  "description": "Botium Connector for SAP Conversational AI",
+  "main": "dist/botium-connector-sapcai-cjs.js",
+  "module": "dist/botium-connector-sapcai-es.js",
+  "scripts": {
+    "build": "npm run eslint && rollup -c",
+    "eslint": "eslint index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeforequity-at/botium-connector-sapcai.git"
+  },
+  "author": "Botium GmbH",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeforequity-at/botium-core/issues"
+  },
+  "homepage": "https://github.com/codeforequity-at/botium-connector-sapcai#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "eslint": "^5.12.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "rollup": "^0.58.2",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.3.0"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.2.0",
+    "botium-core": "^1.4.15",
+    "debug": "^3.1.0",
+    "lodash": "^4.17.11"
+  },
+  "peerDependencies": {
+    "botium-core": ">= 1.4.0"
+  }
+}

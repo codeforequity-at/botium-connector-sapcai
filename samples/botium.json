@@ -1,0 +1,9 @@
+{
+  "botium": {
+    "Capabilities": {
+      "PROJECTNAME": "Botium Project SAP Conversational AI",
+      "CONTAINERMODE": "sapcai",
+      "SAPCAI_TOKEN": "4bcab589a665e9a5e46f1abdec3eac75"
+    }
+  }
+}

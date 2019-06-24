@@ -1,0 +1,8 @@
+basic conversation
+
+#me
+hello
+
+#bot
+Hi, nice to meet you :)
+
