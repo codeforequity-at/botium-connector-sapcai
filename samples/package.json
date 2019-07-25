@@ -15,8 +15,5 @@
     "mocha": "latest",
     "botium-bindings": "latest",
     "botium-connector-sapcai": "../"
-  },
-  "dependencies": {
-    "lodash": "^4.17.11"
   }
 }
