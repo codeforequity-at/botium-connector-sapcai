@@ -5,8 +5,8 @@ const debug = require('debug')('botium-connector-sapcai')
 const SimpleRestContainer = require('botium-core/src/containers/plugins/SimpleRestContainer.js')
 const CoreCapabilities = require('botium-core/src/Capabilities')
 
-const URL = "https://api.cai.tools.sap/build/v1/dialog"
-const METHOD = "POST"
+const URL = 'https://api.cai.tools.sap/build/v1/dialog'
+const METHOD = 'POST'
 
 const Capabilities = {
   SAPCAI_TOKEN: 'SAPCAI_TOKEN',
@@ -35,24 +35,23 @@ class BotiumConnectorSAPCAI {
         [CoreCapabilities.SIMPLEREST_MEDIA_JSONPATH]: '$.results.messages[?(@.type=="video" || @.type=="picture")].content',
         [CoreCapabilities.SIMPLEREST_BUTTONS_JSONPATH]: '$.results.messages..buttons..title'
       }
-        if (this.caps[Capabilities.SAPCAI_TOKEN]) {
-          this.delegateCaps[CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE] = `{ "Authorization": "Token ${this.caps[Capabilities.SAPCAI_TOKEN]}"}`
-        }
+      if (this.caps[Capabilities.SAPCAI_TOKEN]) {
+        this.delegateCaps[CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE] = `{ "Authorization": "Token ${this.caps[Capabilities.SAPCAI_TOKEN]}"}`
+      }
 
-        this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] =
-          this.caps[Capabilities.SAPCAI_LANGUAGE] ?
-          `{ 
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] =
+          this.caps[Capabilities.SAPCAI_LANGUAGE]
+            ? `{ 
             "message": {"type": "text", "content": "{{msg.messageText}}"}, 
             "conversation_id": "{{botium.conversationId}}",
             "language": "${this.caps[Capabilities.SAPCAI_LANGUAGE]}"
           }`
-            :
-          `{ 
+            : `{ 
             "message": {"type": "text", "content": "{{msg.messageText}}"}, 
             "conversation_id": "{{botium.conversationId}}"
           }`
 
-        // values delegated direct
+      // values delegated direct
       _.forIn(this.caps, (value, key) => {
         if (key.startsWith('SAPCAI_')) {
           this.delegateCaps[key.replace('SAPCAI_', 'SIMPLEREST_')] = value
