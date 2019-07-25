@@ -2,7 +2,7 @@
 
 [![NPM](https://nodei.co/npm/botium-connector-sapcai.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/botium-connector-sapcai/)
 
-[![Codeship Status for codeforequity-at/botium-connector-sapcai](https://app.codeship.com/projects/xxx/status?branch=master)](https://app.codeship.com/projects/xxx)
+[![Codeship Status for codeforequity-at/botium-connector-sapcai](https://app.codeship.com/projects/22e46100-911b-0137-ae8a-4e8cea91d933/status?branch=master)](https://app.codeship.com/projects/356365)
 [![npm version](https://badge.fury.io/js/botium-connector-sapcai.svg)](https://badge.fury.io/js/botium-connector-sapcai)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
