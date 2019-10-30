@@ -103,10 +103,6 @@ Install the packages, and run the test:
 
 Set the capability __CONTAINERMODE__ to __sapcai__ to activate this connector.
 
-This connector is a wrapper around [Generic HTTP(S)/JSON Connector](https://botium.atlassian.net/wiki/spaces/BOTIUM/pages/24510469/Generic+HTTP+S+JSON+Connector). Just sets some capabilities with defaults to simplify configuration.
-
-You can use all capabilities of _Generic HTTP(S)/JSON Connector_ with this connector. For example SAPCAI_URL is SIMPLEREST_URL. See the description of capabilities there.
-
 ### SAPCAI_TOKEN
 To acquire it 
 - open [SAP Conversational AI Console Dashboard],(https://cai.tools.sap/) 
@@ -117,45 +113,7 @@ Using request token is preferred.
 
 You can read about tokens [here](https://cai.tools.sap/docs/api-reference/?shell#authentication).
 
-### SAPCAI_REST_INPUT_METHOD
-Default:
-
-```POST```
-
 ### SAPCAI_LANGUAGE
 
 A valid language isocode like "en". If not provided a language detection will be performed. See [SAP Conversational AI, /Dialog endpoint](https://cai.tools.sap/docs/api-reference/?javascript#dialog-text).
-
-### SAPCAI_BODY_TEMPLATE
-Default:
-
-```
-{ 
-  "message": {
-    "type": "text", 
-    "content": "{{msg.messageText}}"
-  }, 
-  "conversation_id": "{{botium.conversationId}}",
-  "language": "${this.caps[Capabilities.SAPCAI_LANGUAGE]}"
-  }
-```
-
-As you see, this capability uses _SAPCAI_LANGUAGE_ capability. Dont set booth of them.
-### SAPCAI_RESPONSE_JSONPATH
-Default: 
-
-```$.results.messages[?(@.type=="text")].content```
-
-### SAPCAI_MEDIA_JSONPATH
-Default:
-
-```$.results.messages[?(@.type=="video" || @.type=="picture")].content```
-
-### SAPCAI_BUTTONS_JSONPATH
-Default:
-
-```$.results.messages..buttons..title```
-
-### SAPCAI_...
-You can use all other _Generic HTTP(S)/JSON Connector_ capabilities.
 

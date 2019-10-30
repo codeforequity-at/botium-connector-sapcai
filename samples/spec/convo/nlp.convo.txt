@@ -1,0 +1,8 @@
+nlp
+
+#me
+my name is carl
+
+#bot
+ENTITIES person
+ENTITY_VALUES carl

@@ -1,5 +1,4 @@
 const util = require('util')
-const _ = require('lodash')
 const debug = require('debug')('botium-connector-sapcai')
 
 const SimpleRestContainer = require('botium-core/src/containers/plugins/SimpleRestContainer.js')
@@ -40,29 +39,49 @@ class BotiumConnectorSAPCAI {
       }
 
       this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] =
-          this.caps[Capabilities.SAPCAI_LANGUAGE]
-            ? `{ 
-            "message": {"type": "text", "content": "{{msg.messageText}}"}, 
-            "conversation_id": "{{botium.conversationId}}",
-            "language": "${this.caps[Capabilities.SAPCAI_LANGUAGE]}"
-          }`
-            : `{ 
-            "message": {"type": "text", "content": "{{msg.messageText}}"}, 
-            "conversation_id": "{{botium.conversationId}}"
-          }`
+        this.caps[Capabilities.SAPCAI_LANGUAGE]
+          ? `{ 
+          "message": {"type": "text", "content": "{{msg.messageText}}"}, 
+          "conversation_id": "{{botium.conversationId}}",
+          "language": "${this.caps[Capabilities.SAPCAI_LANGUAGE]}"
+        }`
+          : `{ 
+          "message": {"type": "text", "content": "{{msg.messageText}}"}, 
+          "conversation_id": "{{botium.conversationId}}"
+        }`
 
-      // values delegated direct
-      _.forIn(this.caps, (value, key) => {
-        if (key.startsWith('SAPCAI_')) {
-          this.delegateCaps[key.replace('SAPCAI_', 'SIMPLEREST_')] = value
-        } else if (!key.startsWith('SIMPLEREST_')) {
-          this.delegateCaps[key] = value
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_RESPONSE_HOOK] = ({ botMsg }) => {
+        if (botMsg.sourceData.results.nlp) {
+          botMsg.nlp = {
+          }
+          const intents = botMsg.sourceData.results.nlp.intents
+          const entities = botMsg.sourceData.results.nlp.entities
+          if (intents && intents.length > 0) {
+            botMsg.nlp.intent = {
+              name: intents[0].slug,
+              confidence: intents[0].confidence,
+              intents: intents.map(i => ({
+                name: i.slug,
+                confidence: i.confidence
+              }))
+            }
+          }
+          if (entities && Object.keys(entities).length > 0) {
+            botMsg.nlp.entities = Object.keys(entities).reduce((agg, ename) => {
+              return agg.concat(entities[ename].map(e => ({
+                name: ename,
+                value: e.raw,
+                confidence: e.confidence
+              })))
+            }, [])
+          }
         }
-      })
+      }
 
-      this.delegateContainer = new SimpleRestContainer({ queueBotSays: this.queueBotSays, caps: this.delegateCaps })
+      this.delegateCaps = Object.assign({}, this.caps, this.delegateCaps)
 
       debug(`Validate delegateCaps ${util.inspect(this.delegateCaps)}`)
+      this.delegateContainer = new SimpleRestContainer({ queueBotSays: this.queueBotSays, caps: this.delegateCaps })
     }
 
     debug(`Validate delegate`)
