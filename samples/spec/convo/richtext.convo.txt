@@ -1,0 +1,33 @@
+richtext
+
+#me
+richtext
+
+#bot
+this is some text
+
+#bot
+CARDS this is a card title
+BUTTONS Go To Botium
+
+#bot
+CARDS here are some buttons
+BUTTONS Go To Botium
+
+#bot
+CARDS some quick replies
+BUTTONS QR 1|QR 2
+
+#bot
+CARDS Carousel Card 1|Carousel Card 2
+BUTTONS Card Button
+
+#bot
+CARDS List Item 1|List Item 2
+BUTTONS List Button
+
+#bot
+MEDIA botium-120x33.png
+
+#bot
+markdown

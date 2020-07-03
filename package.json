@@ -1,12 +1,13 @@
 {
   "name": "botium-connector-sapcai",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Botium Connector for SAP Conversational AI",
   "main": "dist/botium-connector-sapcai-cjs.js",
   "module": "dist/botium-connector-sapcai-es.js",
   "scripts": {
     "build": "npm run eslint && rollup -c",
-    "eslint": "eslint index.js"
+    "eslint": "eslint index.js",
+    "eslint-fix": "eslint --fix index.js"
   },
   "repository": {
     "type": "git",
@@ -17,26 +18,26 @@
   "bugs": {
     "url": "https://github.com/codeforequity-at/botium-core/issues"
   },
-  "homepage": "https://github.com/codeforequity-at/botium-connector-sapcai#readme",
+  "homepage": "https://www.botium.ai",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/plugin-transform-runtime": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "eslint": "^6.1.0",
-    "eslint-config-standard": "^13.0.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-node": "^9.1.0",
+    "@babel/core": "^7.10.4",
+    "@babel/node": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "eslint": "^7.3.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "rollup": "^1.17.0",
-    "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "rollup": "^2.18.2",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "@babel/runtime": "^7.10.4",
     "debug": "^4.1.1"
   },
   "peerDependencies": {

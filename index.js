@@ -9,7 +9,8 @@ const METHOD = 'POST'
 
 const Capabilities = {
   SAPCAI_TOKEN: 'SAPCAI_TOKEN',
-  SAPCAI_LANGUAGE: 'SAPCAI_LANGUAGE'
+  SAPCAI_LANGUAGE: 'SAPCAI_LANGUAGE',
+  SAPCAI_MEMORY: 'SAPCAI_MEMORY'
 }
 
 class BotiumConnectorSAPCAI {
@@ -23,34 +24,84 @@ class BotiumConnectorSAPCAI {
   Validate () {
     debug('Validate called')
 
-    // if (!this.caps[Capabilities.SAPCAI_TOKEN]) throw new Error('SAPCAI_TOKEN capability required')
+    if (!this.caps[Capabilities.SAPCAI_TOKEN]) throw new Error('SAPCAI_TOKEN capability required')
 
     if (!this.delegateContainer) {
       // default values
       this.delegateCaps = {
         [CoreCapabilities.SIMPLEREST_URL]: URL,
         [CoreCapabilities.SIMPLEREST_METHOD]: METHOD,
-        [CoreCapabilities.SIMPLEREST_RESPONSE_JSONPATH]: '$.results.messages[?(@.type=="text")].content',
-        [CoreCapabilities.SIMPLEREST_MEDIA_JSONPATH]: '$.results.messages[?(@.type=="video" || @.type=="picture")].content',
-        [CoreCapabilities.SIMPLEREST_BUTTONS_JSONPATH]: '$.results.messages..buttons..title'
+        [CoreCapabilities.SIMPLEREST_BODY_JSONPATH]: '$.results.messages[*]',
+        [CoreCapabilities.SIMPLEREST_CONTEXT_JSONPATH]: '$.results.conversation.memory',
+        [CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE]: `{ "Authorization": "Token ${this.caps[Capabilities.SAPCAI_TOKEN]}"}`
       }
-      if (this.caps[Capabilities.SAPCAI_TOKEN]) {
-        this.delegateCaps[CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE] = `{ "Authorization": "Token ${this.caps[Capabilities.SAPCAI_TOKEN]}"}`
+      if (this.caps[Capabilities.SAPCAI_MEMORY]) {
+        this.delegateCaps[CoreCapabilities.SIMPLEREST_INIT_CONTEXT] = this.caps[Capabilities.SAPCAI_MEMORY]
       }
 
-      this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] =
-        this.caps[Capabilities.SAPCAI_LANGUAGE]
-          ? `{ 
-          "message": {"type": "text", "content": "{{msg.messageText}}"}, 
-          "conversation_id": "{{botium.conversationId}}",
-          "language": "${this.caps[Capabilities.SAPCAI_LANGUAGE]}"
-        }`
-          : `{ 
-          "message": {"type": "text", "content": "{{msg.messageText}}"}, 
-          "conversation_id": "{{botium.conversationId}}"
-        }`
+      const bodyTemplate = {
+        message: {
+          type: 'text',
+          content: '{{msg.messageText}}'
+        },
+        conversation_id: '{{botium.conversationId}}'
+      }
+      if (this.caps[Capabilities.SAPCAI_LANGUAGE]) {
+        bodyTemplate.language = this.caps[Capabilities.SAPCAI_LANGUAGE]
+      }
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] = JSON.stringify(bodyTemplate, null, 2)
 
-      this.delegateCaps[CoreCapabilities.SIMPLEREST_RESPONSE_HOOK] = ({ botMsg }) => {
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_REQUEST_HOOK] = ({ requestOptions, context }) => {
+        if (context) {
+          requestOptions.body.memory = context
+        }
+      }
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_RESPONSE_HOOK] = ({ botMsg, botMsgRoot }) => {
+        if (botMsgRoot.type === 'text') {
+          botMsg.messageText = botMsgRoot.content
+        }
+        if (botMsgRoot.type === 'card') {
+          botMsg.cards = [{
+            text: botMsgRoot.content.title,
+            subtext: botMsgRoot.content.subtitle,
+            image: { mediaUri: botMsgRoot.content.imageUrl },
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+          }]
+        }
+        if (botMsgRoot.type === 'buttons') {
+          botMsg.cards = [{
+            text: botMsgRoot.content.title,
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+          }]
+        }
+        if (botMsgRoot.type === 'quickReplies') {
+          botMsg.cards = [{
+            text: botMsgRoot.content.title,
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+          }]
+        }
+        if (botMsgRoot.type === 'carousel') {
+          botMsg.cards = botMsgRoot.content.map(card => ({
+            text: card.title,
+            subtext: card.subtitle,
+            image: { mediaUri: card.imageUrl },
+            buttons: (card.buttons && card.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+          }))
+        }
+        if (botMsgRoot.type === 'list') {
+          botMsg.cards = botMsgRoot.content.elements.map(li => ({
+            text: li.title,
+            subtext: li.subtitle,
+            image: { mediaUri: li.imageUrl },
+            buttons: (li.buttons && li.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+          }))
+        }
+        if (botMsgRoot.type === 'picture' || botMsgRoot.type === 'video') {
+          botMsg.media = [{
+            mediaUri: botMsgRoot.content
+          }]
+        }
+
         if (botMsg.sourceData.results.nlp) {
           botMsg.nlp = {
           }
@@ -84,7 +135,7 @@ class BotiumConnectorSAPCAI {
       this.delegateContainer = new SimpleRestContainer({ queueBotSays: this.queueBotSays, caps: this.delegateCaps })
     }
 
-    debug(`Validate delegate`)
+    debug('Validate delegate')
     return this.delegateContainer.Validate()
   }
 
@@ -134,5 +185,31 @@ class BotiumConnectorSAPCAI {
 
 module.exports = {
   PluginVersion: 1,
-  PluginClass: BotiumConnectorSAPCAI
+  PluginClass: BotiumConnectorSAPCAI,
+  PluginDesc: {
+    name: 'SAP Conversational AI',
+    provider: 'SAP',
+    capabilities: [
+      {
+        name: 'SAPCAI_TOKEN',
+        label: 'Token',
+        type: 'secret',
+        required: true
+      },
+      {
+        name: 'SAPCAI_LANGUAGE',
+        label: 'Language',
+        description: 'A valid language isocode like "en". If not provided a language detection will be performed.',
+        type: 'string',
+        required: false
+      },
+      {
+        name: 'SAPCAI_MEMORY',
+        label: 'Conversation Memory',
+        description: 'Initial conversation memory',
+        type: 'json',
+        required: false
+      }
+    ]
+  }
 }

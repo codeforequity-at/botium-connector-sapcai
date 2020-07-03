@@ -4,5 +4,3 @@ basic conversation
 hello
 
 #bot
-Hi, nice to meet you :)
-

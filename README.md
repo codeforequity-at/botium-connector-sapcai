@@ -117,3 +117,6 @@ You can read about tokens [here](https://cai.tools.sap/docs/api-reference/?shell
 
 A valid language isocode like "en". If not provided a language detection will be performed. See [SAP Conversational AI, /Dialog endpoint](https://cai.tools.sap/docs/api-reference/?javascript#dialog-text).
 
+### SAPCAI_MEMORY
+
+Initial conversation memory, see [help](https://help.sap.com/viewer/a4522a393d2b4643812b7caadfe90c18/latest/en-US/e99f8ad649a94f4a9c3c628567bede7f.html)

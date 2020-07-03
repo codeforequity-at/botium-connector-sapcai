@@ -3,7 +3,11 @@
     "Capabilities": {
       "PROJECTNAME": "Botium Project SAP Conversational AI",
       "CONTAINERMODE": "sapcai",
-      "SAPCAI_TOKEN": "4bcab589a665e9a5e46f1abdec3eac75"
+      "SAPCAI_TOKEN": "...",
+      "SAPCAI_MEMORY": {
+        "mem1": "memvalue1",
+        "mem2": "memvalue2"
+      }
     }
   }
 }
