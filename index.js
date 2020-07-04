@@ -56,7 +56,7 @@ class BotiumConnectorSAPCAI {
           requestOptions.body.memory = context
         }
         if (msg.buttons && msg.buttons.length > 0) {
-          requestOptions.body.message.content = msg.buttons[0].value || msg.buttons[0].text
+          requestOptions.body.message.content = msg.buttons[0].payload || msg.buttons[0].text
         }
       }
       this.delegateCaps[CoreCapabilities.SIMPLEREST_RESPONSE_HOOK] = ({ botMsg, botMsgRoot }) => {
@@ -68,19 +68,19 @@ class BotiumConnectorSAPCAI {
             text: botMsgRoot.content.title,
             subtext: botMsgRoot.content.subtitle,
             image: { mediaUri: botMsgRoot.content.imageUrl },
-            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, payload: b.value }))) || []
           }]
         }
         if (botMsgRoot.type === 'buttons') {
           botMsg.cards = [{
             text: botMsgRoot.content.title,
-            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, payload: b.value }))) || []
           }]
         }
         if (botMsgRoot.type === 'quickReplies') {
           botMsg.cards = [{
             text: botMsgRoot.content.title,
-            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+            buttons: (botMsgRoot.content.buttons && botMsgRoot.content.buttons.map(b => ({ text: b.title, payload: b.value }))) || []
           }]
         }
         if (botMsgRoot.type === 'carousel') {
@@ -88,7 +88,7 @@ class BotiumConnectorSAPCAI {
             text: card.title,
             subtext: card.subtitle,
             image: { mediaUri: card.imageUrl },
-            buttons: (card.buttons && card.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+            buttons: (card.buttons && card.buttons.map(b => ({ text: b.title, payload: b.value }))) || []
           }))
         }
         if (botMsgRoot.type === 'list') {
@@ -96,7 +96,7 @@ class BotiumConnectorSAPCAI {
             text: li.title,
             subtext: li.subtitle,
             image: { mediaUri: li.imageUrl },
-            buttons: (li.buttons && li.buttons.map(b => ({ text: b.title, value: b.value }))) || []
+            buttons: (li.buttons && li.buttons.map(b => ({ text: b.title, payload: b.value }))) || []
           }))
         }
         if (botMsgRoot.type === 'picture' || botMsgRoot.type === 'video') {
