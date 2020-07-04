@@ -1,6 +1,6 @@
 {
   "name": "botium-connector-sapcai",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Botium Connector for SAP Conversational AI",
   "main": "dist/botium-connector-sapcai-cjs.js",
   "module": "dist/botium-connector-sapcai-es.js",

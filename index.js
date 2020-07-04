@@ -51,9 +51,12 @@ class BotiumConnectorSAPCAI {
       }
       this.delegateCaps[CoreCapabilities.SIMPLEREST_BODY_TEMPLATE] = JSON.stringify(bodyTemplate, null, 2)
 
-      this.delegateCaps[CoreCapabilities.SIMPLEREST_REQUEST_HOOK] = ({ requestOptions, context }) => {
+      this.delegateCaps[CoreCapabilities.SIMPLEREST_REQUEST_HOOK] = ({ msg, requestOptions, context }) => {
         if (context) {
           requestOptions.body.memory = context
+        }
+        if (msg.buttons && msg.buttons.length > 0) {
+          requestOptions.body.message.content = msg.buttons[0].value || msg.buttons[0].text
         }
       }
       this.delegateCaps[CoreCapabilities.SIMPLEREST_RESPONSE_HOOK] = ({ botMsg, botMsgRoot }) => {
