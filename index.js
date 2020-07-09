@@ -33,6 +33,7 @@ class BotiumConnectorSAPCAI {
         [CoreCapabilities.SIMPLEREST_METHOD]: METHOD,
         [CoreCapabilities.SIMPLEREST_BODY_JSONPATH]: '$.results.messages[*]',
         [CoreCapabilities.SIMPLEREST_CONTEXT_JSONPATH]: '$.results.conversation.memory',
+        [CoreCapabilities.SIMPLEREST_CONTEXT_MERGE_OR_REPLACE]: 'REPLACE',
         [CoreCapabilities.SIMPLEREST_HEADERS_TEMPLATE]: `{ "Authorization": "Token ${this.caps[Capabilities.SAPCAI_TOKEN]}"}`
       }
       if (this.caps[Capabilities.SAPCAI_MEMORY]) {
