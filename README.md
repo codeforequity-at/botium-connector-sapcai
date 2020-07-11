@@ -23,8 +23,8 @@ It can be used as any other Botium connector with all Botium Stack components:
 * [x] Extracting media from Chatbot API response
 * [x] Extracting buttons from Chatbot API response (All [rich message](https://cai.tools.sap/docs/concepts/structured-messages) containing button are supported)
 * [x] Extracting NLP information (intent, entities) from API response
-* [ ] Sending button clicks to Chatbot API
-* [ ] Supporting conversation contexts
+* [X] Sending button clicks to Chatbot API
+* [X] Supporting conversation contexts
 
 ## Requirements
 * **Node.js and NPM**
