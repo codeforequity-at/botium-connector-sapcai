@@ -4,5 +4,13 @@ basic conversation
 hello
 
 #bot
-Hi, nice to meet you :)
 
+#me
+I want a drink
+
+#bot
+
+#me
+bye
+
+#bot

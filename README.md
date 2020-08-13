@@ -23,8 +23,8 @@ It can be used as any other Botium connector with all Botium Stack components:
 * [x] Extracting media from Chatbot API response
 * [x] Extracting buttons from Chatbot API response (All [rich message](https://cai.tools.sap/docs/concepts/structured-messages) containing button are supported)
 * [x] Extracting NLP information (intent, entities) from API response
-* [ ] Sending button clicks to Chatbot API
-* [ ] Supporting conversation contexts
+* [X] Sending button clicks to Chatbot API
+* [X] Supporting conversation contexts
 
 ## Requirements
 * **Node.js and NPM**
@@ -117,3 +117,6 @@ You can read about tokens [here](https://cai.tools.sap/docs/api-reference/?shell
 
 A valid language isocode like "en". If not provided a language detection will be performed. See [SAP Conversational AI, /Dialog endpoint](https://cai.tools.sap/docs/api-reference/?javascript#dialog-text).
 
+### SAPCAI_MEMORY
+
+Initial conversation memory, see [help](https://help.sap.com/viewer/a4522a393d2b4643812b7caadfe90c18/latest/en-US/e99f8ad649a94f4a9c3c628567bede7f.html)
