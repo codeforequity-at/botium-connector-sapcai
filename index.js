@@ -106,9 +106,8 @@ class BotiumConnectorSAPCAI {
           }]
         }
 
+        botMsg.nlp = {}
         if (botMsg.sourceData.results.nlp) {
-          botMsg.nlp = {
-          }
           const intents = botMsg.sourceData.results.nlp.intents
           const entities = botMsg.sourceData.results.nlp.entities
           if (intents && intents.length > 0) {
@@ -130,6 +129,9 @@ class BotiumConnectorSAPCAI {
               })))
             }, [])
           }
+        }
+        if (!botMsg.nlp.intent) {
+          botMsg.nlp.intent = { incomprehension: true }
         }
       }
 

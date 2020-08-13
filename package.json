@@ -41,6 +41,6 @@
     "debug": "^4.1.1"
   },
   "peerDependencies": {
-    "botium-core": ">= 1.4.15"
+    "botium-core": ">= 1.9.5"
   }
 }
