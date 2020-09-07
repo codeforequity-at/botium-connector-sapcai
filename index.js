@@ -146,22 +146,13 @@ class BotiumConnectorSAPCAI {
   }
 
   Build () {
-    if (this.delegateContainer.Build) {
-      this.delegateContainer.Build()
-    }
-
     debug('Build called')
-    return Promise.resolve()
+    return this.delegateContainer.Build && this.delegateContainer.Build()
   }
 
   Start () {
     debug('Start called')
-
-    if (this.delegateContainer.Start) {
-      this.delegateContainer.Start()
-    }
-
-    return Promise.resolve()
+    return this.delegateContainer.Start && this.delegateContainer.Start()
   }
 
   UserSays (msg) {
@@ -171,21 +162,12 @@ class BotiumConnectorSAPCAI {
 
   Stop () {
     debug('Stop called')
-
-    if (this.delegateContainer.Stop) {
-      this.delegateContainer.Stop()
-    }
-
-    return Promise.resolve()
+    return this.delegateContainer.Stop && this.delegateContainer.Stop()
   }
 
   Clean () {
     debug('Clean called')
-    if (this.delegateContainer.Clean) {
-      this.delegateContainer.Clean()
-    }
-
-    return Promise.resolve()
+    return this.delegateContainer.Clean && this.delegateContainer.Clean()
   }
 }
 
